@@ -1,5 +1,6 @@
 import time
 import tkinter as tk
+import os
 from tkinter import simpledialog, messagebox, filedialog
 
 root = tk.Tk()
@@ -312,12 +313,119 @@ def Rapid():
         with open(dayNumStorage, "w") as newDayNum:
             newDayNum.write(str(numOfDay))
     root.destroy()
-    
+
+def resetHistory():
+    acceptFunc = messagebox.askyesno("Remove All Data", "Are you sure to reset the files?")
+
+    if acceptFunc:
+        localStorage = "C:/ProgramData"
+        currentRatingStorage = localStorage + "/Current Rating Blitz.txt"
+        dayNumStorage = localStorage + "/Number Of Day Blitz.txt"
+        oneWeekResultLocation = localStorage + "/One Week Result Blitz.txt"
+        weekNumStorage = localStorage + "/Number Of Week Blitz.txt"
+
+        currentRatingStorageRapid = localStorage + "/Current Rating Rapid.txt"
+        dayNumStorageRapid = localStorage + "/Number Of Day Rapid.txt"
+        oneWeekResultLocationRapid = localStorage + "/One Week Result Rapid.txt"
+        weekNumStorageRapid = localStorage + "/Number Of Week Rapid.txt"
+
+        with open("C:/ProgramData/testfile.txt", "r") as RatingListsLocation:
+            location = RatingListsLocation.read()
+
+            myRatingList = location + "/Blitz Rating.txt"
+            everyWeekRatingLocation = location + "/Blitz Weekly Rating.txt"
+            myRatingListRapid = location + "/Rapid Rating.txt"
+            everyWeekRatingLocationRapid = location + "/Rapid Weekly Rating.txt"
+
+        if os.path.exists(currentRatingStorage):
+            os.remove(currentRatingStorage)
+            print("Removed")
+        else:
+            print("File not created yet")
+
+        if os.path.exists(dayNumStorage):
+            os.remove(dayNumStorage)
+            print("Removed")
+        else:
+            print("File not created yet")
+
+        if os.path.exists(oneWeekResultLocation):
+            os.remove(oneWeekResultLocation)
+            print("Removed")
+        else:
+            print("File not created yet")
+        
+        if os.path.exists(weekNumStorage):
+            os.remove(weekNumStorage)
+            print("Removed")
+        else:
+            print("File not created yet")
+        
+        if os.path.exists(currentRatingStorageRapid):
+            os.remove(currentRatingStorageRapid)
+            print("Removed")
+        else:
+            print("File not created yet")
+
+        if os.path.exists(dayNumStorageRapid):
+            os.remove(dayNumStorageRapid)
+            print("Removed")
+        else:
+            print("File not created yet")
+
+        if os.path.exists(oneWeekResultLocationRapid):
+            os.remove(oneWeekResultLocationRapid)
+            print("Removed")
+        else:
+            print("File not created yet")
+        
+        if os.path.exists(weekNumStorageRapid):
+            os.remove(weekNumStorageRapid)
+            print("Removed")
+        else:
+            print("File not created yet")
+        
+        if os.path.exists("C:/ProgramData/testfile.txt"):
+            os.remove("C:/ProgramData/testfile.txt")
+            print("Removed")
+        else:
+            print("File not created yet")
+        
+        if os.path.exists(myRatingList):
+            os.remove(myRatingList)
+            print("Removed")
+        else:
+            print("File not created yet")
+        
+        if os.path.exists(everyWeekRatingLocation):
+            os.remove(everyWeekRatingLocation)
+            print("Removed")
+        else:
+            print("File not created yet")
+        
+        if os.path.exists(myRatingListRapid):
+            os.remove(myRatingListRapid)
+            print("Removed")
+        else:
+            print("File not created yet")
+        
+        if os.path.exists(everyWeekRatingLocationRapid):
+            os.remove(everyWeekRatingLocationRapid)
+            print("Removed")
+        else:
+            print("File not created yet")
+
+    else:
+        messagebox.showinfo("Cancel", "Reseting the files canceled")
+    root.destroy()
 
 buttonBlitz = tk.Button(root, text="Blitz", command=Blitz)
 buttonBlitz.pack(pady=10)
 
 buttonRapid = tk.Button(root, text="Rapid", command=Rapid)
 buttonRapid.pack(pady=10)
+
+buttonReset = tk.Button(root, text="Reset All Data", command=resetHistory)
+buttonReset.pack(pady=10)
 
 root.mainloop()
