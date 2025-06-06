@@ -96,8 +96,11 @@ def Blitz():
                 curRating = simpledialog.askinteger("Current Rating", "What is your rating? It is first time I should know your rating")
                 if curRating is not None:
                     ratingListRead.write(str(curRating))
+                    with open(myRatingList, "w") as ratingEmptyList:
+                        ratingEmptyList.write(f"Previous Rating: {myCurrentRating}\n\n")
                 else:
                     messagebox.showwarning("Canceled", "Typing canceled")
+                root.destroy()
 
         with open(weekNumStorage, "r+") as ratingListRead:
             myRatingListInfo = ratingListRead.read()
@@ -253,8 +256,11 @@ def Rapid():
                 curRating = simpledialog.askinteger("Current Rating", "What is your rating? It is first time I should know your rating")
                 if curRating is not None:
                     ratingListRead.write(str(curRating))
+                    with open(myRatingList, "w") as ratingEmptyList:
+                        ratingEmptyList.write(f"Previous Rating: {myCurrentRating}\n\n")
                 else:
                     messagebox.showwarning("Canceled", "Typing canceled")
+                root.destroy()
 
         with open(weekNumStorage, "r+") as ratingListRead:
             myRatingListInfo = ratingListRead.read()
