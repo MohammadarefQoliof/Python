@@ -3,7 +3,7 @@ import os
 from tkinter import simpledialog, messagebox, filedialog
 
 root = tk.Tk()
-root.geometry("300x230+550+300")
+root.geometry("300x190+550+150")
 root.title("Rating Calculator")
 
 
@@ -491,9 +491,6 @@ def notPlayed():
     else:
         messagebox.showerror("Error", "Files not created yet")
 
-def exit():
-    root.destroy()
-
 #------------------MAIN BUTTONS
 buttonBlitz = tk.Button(root, text="Blitz", width=20, command=Blitz)
 buttonBlitz.pack(pady=10)
@@ -506,8 +503,5 @@ buttonReset.pack(pady=10)
 
 buttonNotPlayed = tk.Button(root, text="Not Played Today", width=20, command=notPlayed)
 buttonNotPlayed.pack(pady=10)
-
-buttonExit = tk.Button(root, text="Exit", width=20, command=exit)
-buttonExit.pack(pady=10)
 
 root.mainloop()
