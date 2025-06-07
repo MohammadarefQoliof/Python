@@ -481,9 +481,9 @@ def notPlayed():
 
         window = tk.Toplevel(root)
         window.title("Choose Time Control")
-        window.geometry("300x150")
+        window.geometry("300x150+850+150")
 
-        label = tk.Label(window, text="Which rating did you not play today?")
+        label = tk.Label(window, text="Which rating you did not play today?")
         label.pack(pady=10)
 
         blitzBtn = tk.Button(window, text="Blitz", width=20, command=blitzNotPlayed)
