@@ -1,5 +1,6 @@
 import tkinter as tk
 import os
+import shutil
 from tkinter import simpledialog, messagebox, filedialog
 
 root = tk.Tk()
@@ -40,9 +41,8 @@ def Blitz():
     currentRatingStorage = localStorage + "/Current Rating Blitz.txt"
     dayNumStorage = localStorage + "/Number Of Day Blitz.txt"
     oneWeekResultLocation = localStorage + "/One Week Result Blitz.txt"
-
     weekNumStorage = localStorage + "/Number Of Week Blitz.txt"
-    everyWeekRatingLocation = location + "/Blitz Weekly Rating.txt"
+
     if location != "":
         try:
             with open(myRatingList, "x") as f:
@@ -50,11 +50,15 @@ def Blitz():
         except FileExistsError:
             print("Already exists")
         
+        weeklyFolder = os.path.join(location, "Weekly Ratings")
+        os.makedirs(weeklyFolder, exist_ok=True)
+        everyWeekRatingLocations = os.path.join(weeklyFolder, "Blitz Weekly Ratings.txt")
+
         try:
-            with open(everyWeekRatingLocation, "x") as f:
+            with open(everyWeekRatingLocations, "x") as f:
                 print("Created")
         except FileExistsError:
-            print("Already exists")
+            print("Already existsssssssss")
 
         try:
             with open(currentRatingStorage, "x") as f:
@@ -93,14 +97,15 @@ def Blitz():
         with open(currentRatingStorage, "r+") as ratingListRead:
             myRatingListInfo = ratingListRead.read()
             if myRatingListInfo == "":
-                curRating = simpledialog.askinteger("Current Rating", "What is your rating? It is first time I should know your rating")
+                curRating = simpledialog.askinteger("Current Rating", "What is your rating? It is first time, so I should know your rating")
                 if curRating is not None:
                     ratingListRead.write(str(curRating))
                     with open(myRatingList, "w") as ratingEmptyList:
-                        ratingEmptyList.write(f"Previous Rating: {myCurrentRating}\n\n")
+                        ratingEmptyList.write(f"Previous Rating: {curRating}\n\n")
                 else:
                     messagebox.showwarning("Canceled", "Typing canceled")
-                root.destroy()
+                    with open(myRatingList, "w") as ratingEmptyList:
+                        ratingEmptyList.write(f"Previous Rating: {curRating}\n\n")
 
         with open(weekNumStorage, "r+") as ratingListRead:
             myRatingListInfo = ratingListRead.read()
@@ -151,7 +156,7 @@ def Blitz():
                 numOfWeek = int(weekNum.read())
             with open(oneWeekResultLocation, "r") as theResult:
                 result = int(theResult.read())
-            with open(everyWeekRatingLocation, "a") as everyWeekRating:
+            with open(everyWeekRatingLocations, "a") as everyWeekRating:
                 everyWeekRating.write(f"Week {numOfWeek}: {result}\n\n")
             result = 0
             with open(oneWeekResultLocation, "w") as newOneWeekResult:
@@ -201,7 +206,6 @@ def Rapid():
     oneWeekResultLocation = localStorage + "/One Week Result Rapid.txt"
 
     weekNumStorage = localStorage + "/Number Of Week Rapid.txt"
-    everyWeekRatingLocation = location + "/Rapid Weekly Rating.txt"
 
     if location != "":
         try:
@@ -210,8 +214,12 @@ def Rapid():
         except FileExistsError:
             print("Already exists")
         
+        weeklyFolder = os.path.join(location, "Weekly Ratings")
+        os.makedirs(weeklyFolder, exist_ok=True)
+        everyWeekRatingLocations = os.path.join(weeklyFolder, "Rapid Weekly Ratings.txt")
+
         try:
-            with open(everyWeekRatingLocation, "x") as f:
+            with open(everyWeekRatingLocations, "x") as f:
                 print("Created")
         except FileExistsError:
             print("Already exists")
@@ -253,6 +261,8 @@ def Rapid():
         with open(currentRatingStorage, "r+") as ratingListRead:
             myRatingListInfo = ratingListRead.read()
             if myRatingListInfo == "":
+                with open(currentRatingStorage, "r") as currentRatingFile:
+                        myCurrentRating = currentRatingFile.read()
                 curRating = simpledialog.askinteger("Current Rating", "What is your rating? It is first time I should know your rating")
                 if curRating is not None:
                     ratingListRead.write(str(curRating))
@@ -260,7 +270,8 @@ def Rapid():
                         ratingEmptyList.write(f"Previous Rating: {myCurrentRating}\n\n")
                 else:
                     messagebox.showwarning("Canceled", "Typing canceled")
-                root.destroy()
+                    with open(myRatingList, "w") as ratingEmptyList:
+                        ratingEmptyList.write(f"Previous Rating: {myCurrentRating}\n\n")
 
         with open(weekNumStorage, "r+") as ratingListRead:
             myRatingListInfo = ratingListRead.read()
@@ -311,7 +322,7 @@ def Rapid():
                 numOfWeek = int(weekNum.read())
             with open(oneWeekResultLocation, "r") as theResult:
                 result = int(theResult.read())
-            with open(everyWeekRatingLocation, "a") as everyWeekRating:
+            with open(everyWeekRatingLocations, "a") as everyWeekRating:
                 everyWeekRating.write(f"Week {numOfWeek}: {result}\n\n")
             result = 0
             with open(oneWeekResultLocation, "w") as newOneWeekResult:
@@ -348,9 +359,7 @@ def resetHistory():
                 location = RatingListsLocation.read()
 
             myRatingList = location + "/Blitz Rating.txt"
-            everyWeekRatingLocation = location + "/Blitz Weekly Rating.txt"
             myRatingListRapid = location + "/Rapid Rating.txt"
-            everyWeekRatingLocationRapid = location + "/Rapid Weekly Rating.txt"
 
             if os.path.exists(currentRatingStorage):
                 os.remove(currentRatingStorage)
@@ -412,8 +421,9 @@ def resetHistory():
             else:
                 print("File not created yet")
             
-            if os.path.exists(everyWeekRatingLocation):
-                os.remove(everyWeekRatingLocation)
+            myWeeklyRatingLocation = location + "/Weekly Ratings"
+            if os.path.isdir(myWeeklyRatingLocation):
+                shutil.rmtree(myWeeklyRatingLocation)
                 print("Removed")
             else:
                 print("File not created yet")
@@ -423,12 +433,8 @@ def resetHistory():
                 print("Removed")
             else:
                 print("File not created yet")
-            
-            if os.path.exists(everyWeekRatingLocationRapid):
-                os.remove(everyWeekRatingLocationRapid)
-                print("Removed")
-            else:
-                print("File not created yet")
+
+
         else:
             messagebox.showerror("Error", "Files not created yet")
 
