@@ -261,6 +261,26 @@ def Rapid():
             if myRatingListInfo == "":
                 ratingListRead.write("0")
 
+        with open(weekNumStorage, "r+") as ratingListRead:
+            myRatingListInfo = ratingListRead.read()
+            if myRatingListInfo == "":
+                ratingListRead.write("1")
+
+        root.deiconify()
+
+        with open(dayNumStorage, "r") as dayNum:
+            num = int(dayNum.read())
+
+
+        with open(oneWeekResultLocation, "r") as oneWeekResult:
+            result = int(oneWeekResult.read())
+
+        with open(dayNumStorage, "r") as dayNum:
+            num = int(dayNum.read())
+
+        with open(currentRatingStorage, "r") as myRating:
+            currentRating = myRating.read()
+        
         with open(currentRatingStorage, "r+") as ratingListRead:
             myRatingListInfo = ratingListRead.read()
             if myRatingListInfo == "":
@@ -271,32 +291,13 @@ def Rapid():
                     ratingListRead.write(str(curRating))
                     with open(myRatingList, "w") as ratingEmptyList:
                         ratingEmptyList.write(f"Previous Rating: {myCurrentRating}\n\n")
+                    inputRating = simpledialog.askinteger("Rating Calculate", f"Enter your current rating for Day {num}")
                 else:
-                    messagebox.showwarning("Canceled", "Typing canceled")
                     with open(myRatingList, "w") as ratingEmptyList:
                         ratingEmptyList.write(f"Previous Rating: {myCurrentRating}\n\n")
-
-        with open(weekNumStorage, "r+") as ratingListRead:
-            myRatingListInfo = ratingListRead.read()
-            if myRatingListInfo == "":
-                ratingListRead.write("1")
-
-
-        root.deiconify()
-
-        with open(dayNumStorage, "r") as dayNum:
-            num = int(dayNum.read())
-
-        inputRating = simpledialog.askinteger("Rating Calculate", f"Enter your current rating for Day {num}")
-
-        with open(oneWeekResultLocation, "r") as oneWeekResult:
-            result = int(oneWeekResult.read())
-
-        with open(dayNumStorage, "r") as dayNum:
-            num = int(dayNum.read())
-
-        with open(currentRatingStorage, "r") as myRating:
-            currentRating = myRating.read()
+                    inputRating = None
+            else:
+                inputRating = simpledialog.askinteger("Rating Calculate", f"Enter your current rating for Day {num}")
 
         with open(myRatingList, "a") as file:
             if inputRating is not None:
@@ -493,7 +494,7 @@ def notPlayed():
 
         window = tk.Toplevel(root)
         window.title("Choose Time Control")
-        window.geometry("300x150+850+150")
+        window.geometry("300x150+920+50")
 
         label = tk.Label(window, text="Which rating you did not play today?")
         label.pack(pady=10)
