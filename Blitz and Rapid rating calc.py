@@ -119,20 +119,22 @@ def Blitz():
                 curRating = simpledialog.askinteger("Current Rating", "What is your rating? It is first time, so I should know your rating")
                 if curRating is not None:
                     ratingListRead.write(str(curRating))
-                    with open(myRatingList, "w") as ratingEmptyList:
-                        ratingEmptyList.write(f"Previous Rating: {curRating}\n\n")
                     inputRating = simpledialog.askinteger("Rating Calculate", f"Enter your current rating for Day {num}")
+                    myCurrentRating = curRating
+                    with open(myRatingList, "w") as ratingEmptyList:
+                        ratingEmptyList.write(f"Previous Rating: {myCurrentRating}\n\n")
                 else:
                     with open(myRatingList, "w") as ratingEmptyList:
-                        ratingEmptyList.write(f"Previous Rating: {curRating}\n\n")
+                        ratingEmptyList.write(f"Previous Rating: {myCurrentRating}\n\n")
                     inputRating = None
             else:
+                myCurrentRating = int(myRatingListInfo.strip())
                 inputRating = simpledialog.askinteger("Rating Calculate", f"Enter your current rating for Day {num}")
 
         with open(myRatingList, "a") as file:
             if inputRating is not None:
                 file.write(f"Day {num}: {inputRating}\n")
-                onlyRating = int(inputRating) - int(currentRating)
+                onlyRating = int(inputRating) - int(myCurrentRating)
                 result += onlyRating
                 messagebox.showinfo("Today's Gained Rating", f"Today you gained {onlyRating} Rating")
                 file.write(f"Gained rating: {onlyRating}\n\n")
@@ -284,25 +286,25 @@ def Rapid():
         with open(currentRatingStorage, "r+") as ratingListRead:
             myRatingListInfo = ratingListRead.read()
             if myRatingListInfo == "":
-                with open(currentRatingStorage, "r") as currentRatingFile:
-                        myCurrentRating = currentRatingFile.read()
-                curRating = simpledialog.askinteger("Current Rating", "What is your rating? It is first time I should know your rating")
+                curRating = simpledialog.askinteger("Current Rating", "What is your rating? It is first time, so I should know your rating")
                 if curRating is not None:
                     ratingListRead.write(str(curRating))
+                    inputRating = simpledialog.askinteger("Rating Calculate", f"Enter your current rating for Day {num}")
+                    myCurrentRating = curRating
                     with open(myRatingList, "w") as ratingEmptyList:
                         ratingEmptyList.write(f"Previous Rating: {myCurrentRating}\n\n")
-                    inputRating = simpledialog.askinteger("Rating Calculate", f"Enter your current rating for Day {num}")
                 else:
                     with open(myRatingList, "w") as ratingEmptyList:
                         ratingEmptyList.write(f"Previous Rating: {myCurrentRating}\n\n")
                     inputRating = None
             else:
+                myCurrentRating = int(myRatingListInfo.strip())
                 inputRating = simpledialog.askinteger("Rating Calculate", f"Enter your current rating for Day {num}")
 
         with open(myRatingList, "a") as file:
             if inputRating is not None:
                 file.write(f"Day {num}: {inputRating}\n")
-                onlyRating = int(inputRating) - int(currentRating)
+                onlyRating = int(inputRating) - int(myCurrentRating)
                 result += onlyRating
                 messagebox.showinfo("Today's Gained Rating", f"Today you gained {onlyRating} Rating")
                 file.write(f"Gained rating: {onlyRating}\n\n")
