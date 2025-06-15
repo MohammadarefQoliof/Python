@@ -4,7 +4,7 @@ import shutil
 from tkinter import simpledialog, messagebox, filedialog
 
 root = tk.Tk()
-root.geometry("300x190+550+150")
+root.geometry("300x290+620+50")
 root.title("Rating Calculator")
 
 
@@ -58,7 +58,7 @@ def Blitz():
             with open(everyWeekRatingLocations, "x") as f:
                 print("Created")
         except FileExistsError:
-            print("Already existsssssssss")
+            print("Already exists")
 
         try:
             with open(currentRatingStorage, "x") as f:
@@ -94,28 +94,15 @@ def Blitz():
             if myRatingListInfo == "":
                 ratingListRead.write("0")
 
-        with open(currentRatingStorage, "r+") as ratingListRead:
-            myRatingListInfo = ratingListRead.read()
-            if myRatingListInfo == "":
-                curRating = simpledialog.askinteger("Current Rating", "What is your rating? It is first time, so I should know your rating")
-                if curRating is not None:
-                    ratingListRead.write(str(curRating))
-                    with open(myRatingList, "w") as ratingEmptyList:
-                        ratingEmptyList.write(f"Previous Rating: {curRating}\n\n")
-                else:
-                    messagebox.showwarning("Canceled", "Typing canceled")
-                    with open(myRatingList, "w") as ratingEmptyList:
-                        ratingEmptyList.write(f"Previous Rating: {curRating}\n\n")
-
         with open(weekNumStorage, "r+") as ratingListRead:
             myRatingListInfo = ratingListRead.read()
             if myRatingListInfo == "":
                 ratingListRead.write("1")
 
-
         root.deiconify()
 
-        inputRating = simpledialog.askinteger("Rating Calculate", "Enter your current rating")
+        with open(dayNumStorage, "r") as dayNum:
+            num = int(dayNum.read())
 
         with open(oneWeekResultLocation, "r") as oneWeekResult:
             result = int(oneWeekResult.read())
@@ -125,6 +112,22 @@ def Blitz():
 
         with open(currentRatingStorage, "r") as myRating:
             currentRating = myRating.read()
+        
+        with open(currentRatingStorage, "r+") as ratingListRead:
+            myRatingListInfo = ratingListRead.read()
+            if myRatingListInfo == "":
+                curRating = simpledialog.askinteger("Current Rating", "What is your rating? It is first time, so I should know your rating")
+                if curRating is not None:
+                    ratingListRead.write(str(curRating))
+                    with open(myRatingList, "w") as ratingEmptyList:
+                        ratingEmptyList.write(f"Previous Rating: {curRating}\n\n")
+                    inputRating = simpledialog.askinteger("Rating Calculate", f"Enter your current rating for Day {num}")
+                else:
+                    with open(myRatingList, "w") as ratingEmptyList:
+                        ratingEmptyList.write(f"Previous Rating: {curRating}\n\n")
+                    inputRating = None
+            else:
+                inputRating = simpledialog.askinteger("Rating Calculate", f"Enter your current rating for Day {num}")
 
         with open(myRatingList, "a") as file:
             if inputRating is not None:
@@ -142,7 +145,7 @@ def Blitz():
                 with open(oneWeekResultLocation, "w") as newOneWeekResult:
                     newOneWeekResult.write(str(result))
                 print("Done")
-            else:
+            elif inputRating is None:
                 messagebox.showwarning("Cancel", "Typing canceled")
 
         if num > 7:
@@ -281,7 +284,10 @@ def Rapid():
 
         root.deiconify()
 
-        inputRating = simpledialog.askinteger("Rating Calculate", "Enter your current rating")
+        with open(dayNumStorage, "r") as dayNum:
+            num = int(dayNum.read())
+
+        inputRating = simpledialog.askinteger("Rating Calculate", f"Enter your current rating for Day {num}")
 
         with open(oneWeekResultLocation, "r") as oneWeekResult:
             result = int(oneWeekResult.read())
@@ -365,78 +371,78 @@ def resetHistory():
                 os.remove(currentRatingStorage)
                 print("Removed")
             else:
-                print("File not created yet")
+                print("Files are not created yet")
 
             if os.path.exists(dayNumStorage):
                 os.remove(dayNumStorage)
                 print("Removed")
             else:
-                print("File not created yet")
+                print("Files are not created yet")
 
             if os.path.exists(oneWeekResultLocation):
                 os.remove(oneWeekResultLocation)
                 print("Removed")
             else:
-                print("File not created yet")
+                print("Files are not created yet")
             
             if os.path.exists(weekNumStorage):
                 os.remove(weekNumStorage)
                 print("Removed")
             else:
-                print("File not created yet")
+                print("Files are not created yet")
             
             if os.path.exists(currentRatingStorageRapid):
                 os.remove(currentRatingStorageRapid)
                 print("Removed")
             else:
-                print("File not created yet")
+                print("Files are not created yet")
 
             if os.path.exists(dayNumStorageRapid):
                 os.remove(dayNumStorageRapid)
                 print("Removed")
             else:
-                print("File not created yet")
+                print("Files are not created yet")
 
             if os.path.exists(oneWeekResultLocationRapid):
                 os.remove(oneWeekResultLocationRapid)
                 print("Removed")
             else:
-                print("File not created yet")
+                print("Files are not created yet")
             
             if os.path.exists(weekNumStorageRapid):
                 os.remove(weekNumStorageRapid)
                 print("Removed")
             else:
-                print("File not created yet")
+                print("Files are not created yet")
             
             if os.path.exists("C:/ProgramData/testfile.txt"):
                 os.remove("C:/ProgramData/testfile.txt")
                 print("Removed")
             else:
-                print("File not created yet")
+                print("Files are not created yet")
             
             if os.path.exists(myRatingList):
                 os.remove(myRatingList)
                 print("Removed")
             else:
-                print("File not created yet")
+                print("Files are not created yet")
             
             myWeeklyRatingLocation = location + "/Weekly Ratings"
             if os.path.isdir(myWeeklyRatingLocation):
                 shutil.rmtree(myWeeklyRatingLocation)
                 print("Removed")
             else:
-                print("File not created yet")
+                print("Files are not created yet")
             
             if os.path.exists(myRatingListRapid):
                 os.remove(myRatingListRapid)
                 print("Removed")
             else:
-                print("File not created yet")
+                print("Files are not created yet")
 
 
         else:
-            messagebox.showerror("Error", "Files not created yet")
+            messagebox.showerror("Error", "Files are not created yet")
 
     else:
         messagebox.showinfo("Cancel", "Reseting the files canceled")
@@ -477,7 +483,7 @@ def notPlayed():
         except FileNotFoundError:
             messagebox.showerror("Error", "Files are not created yet")
         window.destroy()
-    
+
     def cancel():
         window.destroy()
 
@@ -501,19 +507,41 @@ def notPlayed():
         rapidBtn = tk.Button(window, text="Cancel", width=20, command=cancel)
         rapidBtn.pack(pady=5)
     else:
-        messagebox.showerror("Error", "Files not created yet")
+        messagebox.showerror("Error", "Files are not created yet")
+
+def changeCurrentRating(mode):
+    localStorage = "C:/ProgramData"
+    currentRatingStorage = localStorage + f"/Current Rating {mode}.txt"
+    if os.path.exists(currentRatingStorage):
+        with open(currentRatingStorage, "w") as newRatingFile:
+            newRating = simpledialog.askinteger("New Rating", "Enter your new rating")
+            if newRating is not None:
+                newRatingFile.write(str(newRating))
+                messagebox.showinfo("Updated", f"Rating updated. Your current {mode} rating is {newRating}")
+            else:
+                print("Canceled")
+    else:
+        messagebox.showerror("Error", "Files are not created yet")
+
+
 
 #------------------MAIN BUTTONS
-buttonBlitz = tk.Button(root, text="Blitz", width=20, command=Blitz)
-buttonBlitz.pack(pady=10)
-
 buttonRapid = tk.Button(root, text="Rapid", width=20, command=Rapid)
 buttonRapid.pack(pady=10)
 
-buttonReset = tk.Button(root, text="Reset All Data", width=20, command=resetHistory)
-buttonReset.pack(pady=10)
+buttonBlitz = tk.Button(root, text="Blitz", width=20, command=Blitz)
+buttonBlitz.pack(pady=10)
+
+buttonChangeRapidRating = tk.Button(root, text="Change Rapid rating", width=20, command=lambda: changeCurrentRating("Rapid"))
+buttonChangeRapidRating.pack(pady=10)
+
+buttonChangeBlitzRating = tk.Button(root, text="Change Blitz rating", width=20, command=lambda: changeCurrentRating("Blitz"))
+buttonChangeBlitzRating.pack(pady=10)
 
 buttonNotPlayed = tk.Button(root, text="Not Played Today", width=20, command=notPlayed)
 buttonNotPlayed.pack(pady=10)
+
+buttonReset = tk.Button(root, text="Reset All Data", width=20, command=resetHistory)
+buttonReset.pack(pady=10)
 
 root.mainloop()
