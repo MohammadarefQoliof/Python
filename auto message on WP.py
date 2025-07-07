@@ -12,7 +12,7 @@ person = input("Enter the contact name: ")
 
 time.sleep(0.5)
 
-pyautogui.moveTo(1110, 1047, duration=2)
+pyautogui.moveTo(1071, 1054, duration=2)
 time.sleep(0.5)
 
 pyautogui.click()
